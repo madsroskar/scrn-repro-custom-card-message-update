@@ -91,9 +91,8 @@ The message should be updated in the application without having to manually refr
 
 ### Appending text to the message 
 
-![Demo appending text to the message](./assets/demo-append.mp4)
-
+[View recording on Loom](https://www.loom.com/share/ce3f158a86ec49ee973c40d1db6588f0 "Loom video")
 
 ### Replacing the message with a new URL (Update the card specifically)
 
-![Demo appending text to the message](./assets/demo-replace.mp4)
+[View recording on Loom](https://www.loom.com/share/7ec3d16d8e2c45c9998236002998b62d "Loom video")
