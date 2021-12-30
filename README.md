@@ -91,9 +91,9 @@ The message should be updated in the application without having to manually refr
 
 ### Appending text to the message 
 
-<div style="position: relative; padding-bottom: 63.52941176470588%; height: 0;"><iframe src="https://www.loom.com/embed/ce3f158a86ec49ee973c40d1db6588f0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+![Demo appending text to the message](./assets/demo-append.mp4)
 
 
 ### Replacing the message with a new URL (Update the card specifically)
 
-<div style="position: relative; padding-bottom: 64.90384615384616%; height: 0;"><iframe src="https://www.loom.com/embed/7ec3d16d8e2c45c9998236002998b62d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+![Demo appending text to the message](./assets/demo-replace.mp4)
