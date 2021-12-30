@@ -16,7 +16,7 @@ const MESSAGE_ID_TO_UPDATE = '';
 /**
  * Add any text to append to the message
  * */
-const TEXT_TO_APPEND_TO_MESSAGE = 'New text';
+const MESSAGE_TEXT = 'A new message text with a different URL https://github.com/GetStream/stream-chat-react-native';
 
 const main = async () => {
   try {
@@ -28,17 +28,10 @@ const main = async () => {
       );
     }
 
-    const response = await chatClient.getMessage(MESSAGE_ID_TO_UPDATE);
-    const messageToUpdate = response.message;
-
-    const newMessageText = `${messageToUpdate.text} - ${TEXT_TO_APPEND_TO_MESSAGE}`;
-
-    const updatedResponse = await chatClient.partialUpdateMessage(
-      MESSAGE_ID_TO_UPDATE,
+    const updatedResponse = await chatClient.updateMessage(
       {
-        set: {
-          text: newMessageText,
-        },
+        id: MESSAGE_ID_TO_UPDATE,
+        text: MESSAGE_TEXT,
       },
       process.env.STREAM_USER_ID,
     );

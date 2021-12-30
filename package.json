@@ -8,7 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "postinstall": "patch-package",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "get-messages": "yarn node scripts/getMessageIdsForChannel.mjs",
+    "replace-message": "yarn node scripts/replaceMessage.mjs",
+    "update-message": "yarn node scripts/updateMessage.mjs"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^3.6.4",

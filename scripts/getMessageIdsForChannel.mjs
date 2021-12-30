@@ -21,10 +21,19 @@ const NUMBER_OF_MESSAGES_TO_PRINT = 3;
 
 const main = async () => {
   try {
+    if (!CHANNEL_ID_TO_GET_MESSAGES_FROM) {
+      throw new Error(
+        `You need to add a channel ID to CHANNEL_ID_TO_GET_MESSAGES_FROM\n\nThis should be added in ${
+          process.argv0 === 'node' ? process.argv[1] : process.argv0
+        }\n`,
+      );
+    }
+
     const channel = chatClient.getChannelById(
       'messaging',
       CHANNEL_ID_TO_GET_MESSAGES_FROM,
     );
+
     await channel.watch();
 
     const messages = channel.state.messages.slice(-NUMBER_OF_MESSAGES_TO_PRINT);
@@ -42,9 +51,11 @@ const main = async () => {
     }
   } catch (error) {
     throw new Error(
-      `Error getting messages for a channel ID: ${error.message}`,
+      `\x1b[31mError encountered while getting messages: ${error.message}\x1b[0m`,
     );
   }
 };
 
-main();
+main().catch(error => {
+  process.stderr.write(`${error.message}`);
+});

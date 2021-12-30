@@ -132,6 +132,10 @@ type ChannelScreenProps = {
  * A custom card component, currently set up to be used for a
  * UrlPreview since I don't have any custom attachment types,
  * so the generic Card component wouldn't be used.
+ *
+ * Not a very useful example in practice, only meant for the
+ * example of having a custom attachment card component in
+ * use.
  * */
 const CustomCardComponent = (props: CardProps) => {
   const {text, title} = props;
