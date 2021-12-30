@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import * as conf from 'react-native-dotenv';
+
 import {
   LogBox,
   Platform,
   SafeAreaView,
   View,
   useColorScheme,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import {
   DarkTheme,
@@ -17,18 +19,19 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
-import {
-  useHeaderHeight
-} from '@react-navigation/elements';
+import {useHeaderHeight} from '@react-navigation/elements';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import {ChannelSort, Channel as ChannelType, StreamChat} from 'stream-chat';
 import {
+  CardProps,
   Channel,
   ChannelList,
   Chat,
+  goToURL,
+  makeImageCompatibleUrl,
   MessageInput,
   MessageList,
   OverlayProvider,
@@ -37,6 +40,7 @@ import {
   ThreadContextValue,
   useAttachmentPickerContext,
   useOverlayContext,
+  useTheme,
 } from 'stream-chat-react-native';
 import Config from 'react-native-config';
 
@@ -52,7 +56,6 @@ type LocalMessageType = Record<string, unknown>;
 type LocalReactionType = Record<string, unknown>;
 type LocalUserType = Record<string, unknown>;
 
-console.log(Config)
 const chatClient = StreamChat.getInstance<
   LocalAttachmentType,
   LocalChannelType,
@@ -69,8 +72,7 @@ const user = {
 };
 
 const filters = {
-  example: 'example-apps',
-  members: {$in: ['ron']},
+  members: {$in: [Config.STREAM_USER_ID]},
   type: 'messaging',
 };
 const sort: ChannelSort<LocalChannelType> = {last_message_at: -1};
@@ -126,6 +128,49 @@ type ChannelScreenProps = {
   navigation: StackNavigationProp<NavigationParamsList, 'Channel'>;
 };
 
+/**
+ * A custom card component, currently set up to be used for a
+ * UrlPreview since I don't have any custom attachment types,
+ * so the generic Card component wouldn't be used.
+ * */
+const CustomCardComponent = (props: CardProps) => {
+  const {text, title} = props;
+
+  const {
+    theme: {
+      messageSimple: {
+        card: {
+          container,
+          footer: {description, title: titleStyle, ...footerStyle},
+        },
+      },
+    },
+  } = useTheme();
+
+  return (
+    <View style={[styles.container, container]}>
+      <View style={[styles.cardFooter, footerStyle]}>
+        <Text style={{color: 'green'}}>{`${title}`}</Text>
+      </View>
+      <View style={[styles.cardFooter, footerStyle]}>
+        <Text style={{color: 'blue'}}>{`${text}`}</Text>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  container: {
+    overflow: 'hidden',
+    width: 256,
+  },
+});
+
 const ChannelScreen: React.FC<ChannelScreenProps> = ({navigation}) => {
   const {channel, setThread, thread} = useContext(AppContext);
   const headerHeight = useHeaderHeight();
@@ -147,6 +192,7 @@ const ChannelScreen: React.FC<ChannelScreenProps> = ({navigation}) => {
       <Chat client={chatClient} i18nInstance={streami18n}>
         <Channel
           channel={channel}
+          UrlPreview={CustomCardComponent}
           keyboardVerticalOffset={headerHeight}
           thread={thread}>
           <View style={{flex: 1}}>
